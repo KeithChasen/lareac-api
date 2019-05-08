@@ -28,8 +28,8 @@ return [
     |
     */
     'connections' => [
-        'mysql' => [
-            'driver'    => 'mysql',
+        'pgsql' => [
+            'driver'    => 'pgsql',
             'host'      => env('DB_HOST', 'localhost'),
             'database'  => env('DB_DATABASE'),
             'username'  => env('DB_USERNAME'),
