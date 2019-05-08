@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Entities\Post;
+use App\Transformers\PostTransformer;
 use Doctrine\ORM\EntityManagerInterface;
 use Illuminate\Http\Request;
 
@@ -16,6 +17,14 @@ class PostController extends Controller
     public function __construct()
     {
         //
+    }
+    public function index(EntityManagerInterface $entityManager) {
+        $posts = $entityManager
+            ->getRepository(Post::class)
+            ->findAll();
+
+        $transformer = new PostTransformer();
+        return $transformer->transformAll($posts);
     }
 
     public function store(Request $request, EntityManagerInterface $entityManager) {
