@@ -45,7 +45,16 @@ class Post
 
     public function setTitle($title)
     {
-        $this->title = $title;
+        if (!is_null($title)) {
+            $this->title = $title;
+        }
+    }
+
+    public function setBody($body)
+    {
+        if (!is_null($body)) {
+            $this->body = $body;
+        }
     }
 
     public function getBody()
@@ -53,8 +62,4 @@ class Post
         return $this->body;
     }
 
-    public function setBody($body)
-    {
-        $this->body = $body;
-    }
 }

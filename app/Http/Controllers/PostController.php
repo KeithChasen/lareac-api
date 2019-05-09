@@ -48,4 +48,29 @@ class PostController extends Controller
         $entityManager->flush();
         return response()->json(['ok' => true], 201);
 	  }
+
+    public function update($id, Request $request, EntityManagerInterface $entityManager)
+    {
+        try {
+            $post = $entityManager
+                ->getRepository(Post::class)
+                ->findOneBy([
+                    'id' => $id
+                ]);
+            $post->setTitle($request->get('title'));
+            $post->setBody($request->get('body'));
+            $entityManager->flush();
+            $transformer = new PostTransformer();
+            return response()->json(
+                [
+                    'ok' => true,
+                    'data' => $transformer->transform($post)
+                ],
+                201
+            );
+        } catch (\Exception $e) {
+            return response()->json(['ok' => false], 500);
+        }
+    }
+
 }
