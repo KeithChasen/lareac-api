@@ -73,4 +73,25 @@ class PostController extends Controller
         }
     }
 
+    public function destroy($id, EntityManagerInterface $entityManager) {
+        try {
+            $post = $entityManager
+                ->getRepository(Post::class)
+                ->findOneBy([
+                    'id' => $id
+                ]);
+            $entityManager->remove($post);
+            $entityManager->flush();
+            return response()->json(
+                [
+                    'ok' => true
+                ],
+                201
+            );
+        } catch (\Exception $e) {
+            return response()->json(['ok' => false], 500);
+        }
+    }
+
+
 }
