@@ -27,6 +27,16 @@ class PostController extends Controller
         return $transformer->transformAll($posts);
     }
 
+    public function show($id, EntityManagerInterface $entityManager) {
+        $post = $entityManager
+            ->getRepository(Post::class)
+            ->findOneBy([
+                'id' => $id
+            ]);
+        $transformer = new PostTransformer();
+        return $transformer->transform($post);
+    }
+
     public function store(Request $request, EntityManagerInterface $entityManager) {
 
         $post = new Post(
